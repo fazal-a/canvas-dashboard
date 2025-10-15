@@ -1,0 +1,75 @@
+import { Appointment, DailyStats, OutstandingItemsData } from '../types';
+
+export const mockAppointments: Appointment[] = [
+    {
+        id: '1',
+        patientId: 'P001',
+        patientName: 'Carmen Lynch',
+        dateOfBirth: '1/24/1956',
+        age: 69,
+        gender: 'Female',
+        startTime: '9:45 AM',
+        endTime: '10:00 AM',
+        type: 'Follow-up Visit',
+        status: 'scheduled',
+        provider: 'Dr. MAQSOOD',
+        location: 'Goldsboro',
+    },
+    {
+        id: '2',
+        patientId: 'P002',
+        patientName: 'Sharon Marie Anderson',
+        dateOfBirth: '9/18/1963',
+        age: 61,
+        gender: 'Female',
+        startTime: '10:00 AM',
+        endTime: '10:15 AM',
+        type: 'Office Visit',
+        status: 'scheduled',
+        provider: 'Dr. MAQSOOD',
+        location: 'Goldsboro',
+    },
+    {
+        id: '3',
+        patientId: 'P003',
+        patientName: 'Brian E Everett',
+        dateOfBirth: '5/26/1959',
+        age: 66,
+        gender: 'Male',
+        startTime: '10:15 AM',
+        endTime: '10:30 AM',
+        type: 'Office Visit',
+        status: 'scheduled',
+        provider: 'Dr. MAQSOOD',
+        location: 'Goldsboro',
+    },
+    {
+        id: '4',
+        patientId: 'P004',
+        patientName: 'Steven R Fowler',
+        dateOfBirth: '6/07/1957',
+        age: 68,
+        gender: 'Male',
+        startTime: '10:30 AM',
+        endTime: '10:45 AM',
+        type: 'Office Visit',
+        status: 'scheduled',
+        provider: 'Dr. MAQSOOD',
+        location: 'Goldsboro',
+    },
+];
+
+export const mockDailyStats: DailyStats = {
+    scheduled: 24,
+    completed: 1,
+    inOffice: 0,
+    cancelled: 2,
+    noShow: 1,
+};
+
+export const mockOutstandingItems: OutstandingItemsData = {
+    openNotes: 238,
+    pendingLabs: 633,
+    messages: 12,
+    recallsDue: 8,
+};
