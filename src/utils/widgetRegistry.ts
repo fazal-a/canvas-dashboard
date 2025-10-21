@@ -3,6 +3,7 @@ import { TodaysSchedule } from '@/components/widgets/appointments/TodaysSchedule
 import { DailyStats } from '@/components/widgets/stats/DailyStats';
 import { OutstandingItems } from '@/components/widgets/stats/OutstandingItems';
 import { QuickActions } from '@/components/widgets/actions/QuickActions';
+import { VoiceNote } from '@/components/widgets/speech/VoiceNote';
 import React from "react";
 
 export const widgetDefinitions: WidgetDefinition[] = [
@@ -50,6 +51,17 @@ export const widgetDefinitions: WidgetDefinition[] = [
         minWidth: 2,
         minHeight: 2,
     },
+    {
+        type: 'voice_note',
+        title: 'Voice Transcription',
+        description: 'Real-time speech-to-text with AssemblyAI',
+        category: 'Clinical Dashboard',
+        icon: '🎤',
+        defaultWidth: 4,
+        defaultHeight: 3,
+        minWidth: 3,
+        minHeight: 2,
+    },
 ];
 
 export const widgetComponents: Record<string, React.ComponentType<any>> = {
@@ -57,6 +69,7 @@ export const widgetComponents: Record<string, React.ComponentType<any>> = {
     daily_stats: DailyStats,
     outstanding_items: OutstandingItems,
     quick_actions: QuickActions,
+    voice_note: VoiceNote,
 };
 
 export function getWidgetDefinition(type: string): WidgetDefinition | undefined {
