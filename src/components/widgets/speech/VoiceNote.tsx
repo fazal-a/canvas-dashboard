@@ -86,7 +86,7 @@ export const VoiceNote: React.FC<VoiceNoteProps> = ({widget}) => {
                         fontWeight: isRecording ? 600 : 400
                     }}
                 >
-                    {isRecording ? '🔴 Recording... Speak now' : 'Click microphone to start'}
+                    {isRecording ? 'Recording... Speak now' : 'Click microphone to start'}
                 </Typography>
 
                 {/* Error Display */}
@@ -118,7 +118,9 @@ export const VoiceNote: React.FC<VoiceNoteProps> = ({widget}) => {
                             color="text.secondary"
                             sx={{fontStyle: 'italic'}}
                         >
-                            Your transcription will appear here...
+                            {isRecording
+                                ? 'Listening... Speak or play audio...'
+                                : 'Transcription will appear here...'}
                         </Typography>
                     )}
                 </Paper>
