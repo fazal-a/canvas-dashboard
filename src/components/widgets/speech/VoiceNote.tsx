@@ -1,34 +1,67 @@
-import React from 'react';
+import React, {useState} from "react";
 import {
     Box,
     IconButton,
     Typography,
     Paper,
-    Alert
+    Alert,
+    Button
 } from '@mui/material';
 import {
     Mic,
     Stop,
-    Delete as DeleteIcon,
+    Delete as DeleteIcon, Upload
 } from '@mui/icons-material';
 import {WidgetContainer} from '../WidgetContainer';
 import {Widget} from '@/types';
-import {useSpeechRecognition} from '@/hooks/useSpeechRecognition';
+import {useAudioRecorder} from "@/hooks/useAudioRecorder";
+import {uploadAudioFile} from "@/lib/uploadAudioFile";
 
 interface VoiceNoteProps {
     widget: Widget;
 }
 
 export const VoiceNote: React.FC<VoiceNoteProps> = ({widget}) => {
-    const {
-        isRecording,
-        transcript,
-        startRecording,
-        stopRecording,
-        clearTranscript,
-        error
-    } = useSpeechRecognition();
-    console.log("transcript", transcript);
+
+    const {isRecording, audioBlob, startRecording, stopRecording, clearRecording, error} =
+        useAudioRecorder();
+
+    const [transcript, setTranscript] = useState("");
+    const [uploading, setUploading] = useState(false);
+
+    const [deleting, setDeleting] = useState(false);
+
+
+    const handleUpload = async () => {
+        if (!audioBlob) return;
+        setUploading(true);
+        try {
+            console.log("hit handleUpload try section")
+            const res = await uploadAudioFile(audioBlob);
+            setTranscript(res.transcript || JSON.stringify(res, null, 2));
+        } catch (err: any) {
+            console.error(err);
+        } finally {
+            setUploading(false);
+        }
+    };
+
+
+    const handleDelete = async () => {
+        if (!audioBlob) return;
+        setDeleting(true);
+        try {
+            console.log("hit handleDelete try section")
+            clearRecording();
+            setTranscript("");
+        } catch (err: any) {
+            console.error(err);
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    console.log("transcript::::", transcript)
 
     return (
         <WidgetContainer widget={widget}>
@@ -61,42 +94,35 @@ export const VoiceNote: React.FC<VoiceNoteProps> = ({widget}) => {
                         )}
                     </IconButton>
 
-                    {transcript && !isRecording && (
-                        <IconButton
-                            onClick={clearTranscript}
-                            sx={{
-                                width: 64,
-                                height: 64,
-                                bgcolor: 'rgba(255, 255, 255, 0.1)',
-                                '&:hover': {bgcolor: 'rgba(255, 255, 255, 0.2)'}
-                            }}
+                    {audioBlob && !isRecording && (
+                        <Button
+                            variant="contained"
+                            startIcon={<Upload/>}
+                            onClick={handleUpload}
+                            disabled={uploading}
                         >
-                            <DeleteIcon/>
-                        </IconButton>
+                            {uploading ? "Uploading..." : "Upload"}
+                        </Button>
                     )}
+                    {audioBlob && !isRecording && (
+                        <Button
+                            variant="contained"
+                            sx={{
+                                backgroundColor: 'rgba(225,48,48,1)',
+                                color: 'white'
+                            }}
+                            startIcon={<DeleteIcon/>}
+                            onClick={handleDelete}
+                            disabled={deleting}
+                        >
+                            {deleting ? "Deleting..." : "Delete"}
+                        </Button>
+                    )}
+
                 </Box>
 
-                {/* Status */}
-                <Typography
-                    variant="caption"
-                    color={isRecording ? 'primary.main' : 'text.secondary'}
-                    sx={{
-                        textAlign: 'center',
-                        mb: 2,
-                        fontWeight: isRecording ? 600 : 400
-                    }}
-                >
-                    {isRecording ? 'Recording... Speak now' : 'Click microphone to start'}
-                </Typography>
+                {error && <Alert severity="error">{error}</Alert>}
 
-                {/* Error Display */}
-                {error && (
-                    <Alert severity="error" sx={{mb: 2}}>
-                        {error}
-                    </Alert>
-                )}
-
-                {/* Transcript Display */}
                 <Paper
                     sx={{
                         flex: 1,
@@ -112,15 +138,13 @@ export const VoiceNote: React.FC<VoiceNoteProps> = ({widget}) => {
                         <Typography variant="body2" sx={{whiteSpace: 'pre-wrap'}}>
                             {transcript}
                         </Typography>
+                    ) : audioBlob ? (
+                        <Typography variant="caption" color="text.secondary">
+                            Audio recorded. Click upload to send.
+                        </Typography>
                     ) : (
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{fontStyle: 'italic'}}
-                        >
-                            {isRecording
-                                ? 'Listening... Speak or play audio...'
-                                : 'Transcription will appear here...'}
+                        <Typography variant="caption" color="text.secondary">
+                            {isRecording ? "Recording..." : "Press mic to start"}
                         </Typography>
                     )}
                 </Paper>
