@@ -4,8 +4,8 @@ import {
     MoreVert as MoreVertIcon,
     Close as CloseIcon,
 } from '@mui/icons-material';
-import { Widget } from '../../types';
-import { useDashboardStore } from '../../store/dashboardStore';
+import { Widget } from '@/types';
+import { useDashboardStore } from '@/store/dashboardStore';
 
 interface WidgetContainerProps {
     widget: Widget;
@@ -49,9 +49,29 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
             <CardHeader
                 title={widget.title}
                 action={
-                    <Box>
+                    <Box sx={{ display: 'flex', gap: 0.5 }}>
                         {isEditMode && (
-                            <IconButton size="small" onClick={handleRemove} color="error">
+                            <IconButton
+                                size="small"
+                                color="error"
+                                onMouseDown={(e) => {
+                                    // Prevent drag from starting
+                                    e.stopPropagation();
+                                }}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    if (window.confirm(`Remove "${widget.title}" widget?`)) {
+                                        removeWidget(widget.i);
+                                    }
+                                }}
+                                sx={{
+                                    zIndex: 1000,
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 68, 68, 0.1)',
+                                    }
+                                }}
+                            >
                                 <CloseIcon fontSize="small" />
                             </IconButton>
                         )}

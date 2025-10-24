@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Stack } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import {
     PersonAdd as PersonAddIcon,
     Event as EventIcon,
@@ -16,13 +17,15 @@ interface QuickActionsProps {
 }
 
 export const QuickActions: React.FC<QuickActionsProps> = ({ widget }) => {
+    const router = useRouter();
+
     const actions = [
-        { label: 'New Patient', icon: <PersonAddIcon />, color: 'primary' },
-        { label: 'Schedule', icon: <EventIcon />, color: 'primary' },
-        { label: 'Messages', icon: <MessageIcon />, color: 'primary' },
-        { label: 'New Note', icon: <DescriptionIcon />, color: 'secondary' },
-        { label: 'E-Prescribe', icon: <PharmacyIcon />, color: 'secondary' },
-        { label: 'Order Labs', icon: <ScienceIcon />, color: 'secondary' },
+        { label: 'New Patient', icon: <PersonAddIcon />, color: 'primary', navigation: 'patient-onboarding' },
+        { label: 'Schedule', icon: <EventIcon />, color: 'primary', navigation: '' },
+        { label: 'Messages', icon: <MessageIcon />, color: 'primary', navigation: '' },
+        { label: 'New Note', icon: <DescriptionIcon />, color: 'secondary', navigation: '' },
+        { label: 'E-Prescribe', icon: <PharmacyIcon />, color: 'secondary', navigation: '' },
+        { label: 'Order Labs', icon: <ScienceIcon />, color: 'secondary', navigation: '' },
     ];
 
     return (
@@ -44,6 +47,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ widget }) => {
                                 backgroundColor: 'rgba(0, 212, 170, 0.1)',
                             },
                         }}
+                        onClick={()=>router.push(`/${action.navigation}`)}
                     >
                         {action.label}
                     </Button>

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Layout } from 'react-grid-layout';
-import { Widget, DashboardLayout, User } from '../types';
+import { Widget, DashboardLayout, User } from '@/types';
 
 interface DashboardStore {
     // User State

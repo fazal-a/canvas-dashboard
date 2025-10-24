@@ -15,9 +15,9 @@ import {
     Search as SearchIcon,
     Close as CloseIcon,
 } from '@mui/icons-material';
-import { useDashboardStore } from '../../store/dashboardStore';
-import { widgetDefinitions } from '../../utils/widgetRegistry';
-import { Widget } from '../../types';
+import { useDashboardStore } from '@/store/dashboardStore';
+import { widgetDefinitions } from '@/utils/widgetRegistry';
+import { Widget } from '@/types';
 
 export const WidgetLibrary: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
