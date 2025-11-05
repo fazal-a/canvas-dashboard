@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     AppBar,
     Toolbar,
@@ -18,7 +18,7 @@ import {
     Settings as SettingsIcon,
     Search as SearchIcon,
 } from '@mui/icons-material';
-import { useDashboardStore } from '../../store/dashboardStore';
+import {useDashboardStore} from '@/store/dashboardStore';
 
 interface TopNavigationProps {
     onCommandCenterOpen: () => void;
@@ -35,22 +35,23 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({
             position="sticky"
             elevation={0}
             sx={{
-                backgroundColor: 'rgba(18, 18, 18, 0.95)',
-                backdropFilter: 'blur(10px)',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                background: 'rgba(10, 10, 10, 0.8)',
+                backdropFilter: 'blur(20px)',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
             }}
         >
-            <Toolbar sx={{ justifyContent: 'space-between', gap: 2 }}>
+            <Toolbar sx={{justifyContent: 'space-between', gap: 2}}>
                 {/* Left Section */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                <Box sx={{display: 'flex', alignItems: 'center', gap: 3}}>
                     <Typography
                         variant="h6"
                         sx={{
-                            color: 'primary.main',
+                            background: 'linear-gradient(135deg, #00D48A 0%, #06B6D4 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
                             fontWeight: 700,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1,
+                            fontSize: '1.25rem',
                             cursor: 'pointer',
                         }}
                     >
@@ -61,22 +62,31 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({
                         placeholder="Search patients, appointments..."
                         size="small"
                         sx={{
-                            width: 350,
-                            display: { xs: 'none', md: 'block' },
+                            width: 400,
+                            display: {xs: 'none', md: 'block'},
                             '& .MuiOutlinedInput-root': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                backdropFilter: 'blur(10px)',
+                                transition: 'all 0.3s',
                                 '& fieldset': {
-                                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
                                 },
-                                '&:hover fieldset': {
-                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                '&:hover': {
+                                    background: 'rgba(255, 255, 255, 0.08)',
+                                    '& fieldset': {
+                                        borderColor: 'rgba(0, 212, 138, 0.5)',
+                                    },
+                                },
+                                '&.Mui-focused': {
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    boxShadow: '0 0 20px rgba(0, 212, 138, 0.2)',
                                 },
                             },
                         }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchIcon sx={{ opacity: 0.5 }} />
+                                    <SearchIcon sx={{opacity: 0.6}}/>
                                 </InputAdornment>
                             ),
                         }}
@@ -88,7 +98,7 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({
                     value={activeTab}
                     onChange={(e, newValue) => setActiveTab(newValue)}
                     sx={{
-                        display: { xs: 'none', md: 'flex' },
+                        display: {xs: 'none', md: 'flex'},
                         '& .MuiTab-root': {
                             color: 'rgba(255, 255, 255, 0.6)',
                             minHeight: 64,
@@ -101,40 +111,47 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({
                         },
                     }}
                 >
-                    <Tab label="Dashboard" />
-                    <Tab label="Patients" />
-                    <Tab label="Schedule" />
-                    <Tab label="Reports" />
+                    <Tab label="Dashboard"/>
+                    <Tab label="Patients"/>
+                    <Tab label="Schedule"/>
+                    <Tab label="Reports"/>
                 </Tabs>
 
-                {/* Right Section */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+
+                {/* Icon buttons with hover glow */}
+                <Box sx={{display: 'flex', alignItems: 'center', gap: 1.5}}>
                     <IconButton
                         onClick={onCommandCenterOpen}
                         sx={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                            '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' },
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            transition: 'all 0.3s',
+                            '&:hover': {
+                                background: 'rgba(0, 212, 138, 0.15)',
+                                boxShadow: '0 0 20px rgba(0, 212, 138, 0.3)',
+                            },
                         }}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
 
                     <IconButton>
                         <Badge badgeContent={12} color="error">
-                            <NotificationsIcon />
+                            <NotificationsIcon/>
                         </Badge>
-                    </IconButton>
-
-                    <IconButton sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
-                        <SettingsIcon />
                     </IconButton>
 
                     <Avatar
                         sx={{
-                            background: 'linear-gradient(135deg, #00d4aa, #0066ff)',
+                            background: 'linear-gradient(135deg, #00D48A 0%, #06B6D4 100%)',
                             cursor: 'pointer',
-                            width: 36,
-                            height: 36,
+                            width: 40,
+                            height: 40,
+                            border: '2px solid rgba(255, 255, 255, 0.1)',
+                            transition: 'all 0.3s',
+                            '&:hover': {
+                                transform: 'scale(1.05)',
+                                boxShadow: '0 0 20px rgba(0, 212, 138, 0.4)',
+                            },
                         }}
                     >
                         {user?.name.charAt(0) || 'U'}

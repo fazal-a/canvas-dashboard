@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Box,
     Container,
@@ -13,11 +13,11 @@ import {
     Event as EventIcon,
     Save as SaveIcon,
 } from '@mui/icons-material';
-import { TopNavigation } from './TopNavigation';
-import { CommandCenter } from './CommandCenter';
-import { WidgetLibrary } from '../widgets/WidgetLibrary';
-import { DashboardCanvas } from './DashboardCanvas';
-import { useDashboardStore } from '../../store/dashboardStore';
+import {TopNavigation} from './TopNavigation';
+import {CommandCenter} from './CommandCenter';
+import {WidgetLibrary} from '../widgets/WidgetLibrary';
+import {DashboardCanvas} from './DashboardCanvas';
+import {useDashboardStore} from '@/store/dashboardStore';
 
 export const MainLayout: React.FC = () => {
     const [commandCenterOpen, setCommandCenterOpen] = useState(false);
@@ -57,40 +57,44 @@ export const MainLayout: React.FC = () => {
     };
 
     return (
-        <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
-            <TopNavigation onCommandCenterOpen={() => setCommandCenterOpen(true)} />
+        <Box sx={{minHeight: '100vh', background: 'linear-gradient(180deg, #0A0A0A 0%, #0F0F0F 100%)'}}>
+            <TopNavigation onCommandCenterOpen={() => setCommandCenterOpen(true)}/>
 
             <CommandCenter
                 open={commandCenterOpen}
                 onClose={() => setCommandCenterOpen(false)}
             />
 
-            <WidgetLibrary />
+            <WidgetLibrary/>
 
-            <Container maxWidth="xl" sx={{ py: 4 }}>
+            <Container maxWidth="xl" sx={{py: 4}}>
                 {/* Header Section */}
                 <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: { xs: 'flex-start', md: 'center' },
-                        flexDirection: { xs: 'column', md: 'row' },
-                        gap: 2,
-                        mb: 4,
-                    }}
-                >
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: {xs: 'flex-start', md: 'center'},
+                    flexDirection: {xs: 'column', md: 'row'},
+                    gap: 2,
+                    mb: 4,
+                    p: 3,
+                    borderRadius: 3,
+                    background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%)',
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                }}>
                     <Box>
-                        <Typography variant="h4" fontWeight={700}>
+                        <Typography variant="h4" fontWeight={700} className="gradient-text">
                             Welcome back, {user?.name}
                         </Typography>
-                        <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
+                        <Typography variant="body1" color="text.secondary" sx={{mt: 0.5}}>
                             Monday, September 08, 2025 • 24 appointments today
                         </Typography>
                     </Box>
 
-                    <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+                    <Box sx={{display: 'flex', gap: 1.5, flexWrap: 'wrap'}}>
                         <Button
                             variant={isEditMode ? 'contained' : 'outlined'}
-                            startIcon={<EditIcon />}
+                            startIcon={<EditIcon/>}
                             onClick={handleEditToggle}
                             color={isEditMode ? 'primary' : 'inherit'}
                         >
@@ -100,7 +104,7 @@ export const MainLayout: React.FC = () => {
                         {isEditMode && (
                             <Button
                                 variant="outlined"
-                                startIcon={<SaveIcon />}
+                                startIcon={<SaveIcon/>}
                                 onClick={handleSaveLayout}
                             >
                                 Save Layout
@@ -109,13 +113,13 @@ export const MainLayout: React.FC = () => {
 
                         <Button
                             variant="outlined"
-                            startIcon={<AddIcon />}
+                            startIcon={<AddIcon/>}
                             onClick={toggleWidgetLibrary}
                         >
                             Add Widget
                         </Button>
 
-                        <Button variant="contained" startIcon={<EventIcon />}>
+                        <Button variant="contained" startIcon={<EventIcon/>}>
                             New Appointment
                         </Button>
                     </Box>
@@ -135,44 +139,43 @@ export const MainLayout: React.FC = () => {
                         <Typography variant="h5" gutterBottom>
                             🎨 Your Canvas is Empty
                         </Typography>
-                        <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                        <Typography variant="body1" color="text.secondary" sx={{mb: 3}}>
                             Start building your personalized dashboard by adding widgets
                         </Typography>
                         <Button
                             variant="contained"
                             size="large"
-                            startIcon={<AddIcon />}
+                            startIcon={<AddIcon/>}
                             onClick={toggleWidgetLibrary}
                         >
                             Add Your First Widget
                         </Button>
                     </Box>
                 ) : (
-                    <DashboardCanvas />
+                    <DashboardCanvas/>
                 )}
             </Container>
 
             {/* Edit Mode Indicator */}
             {isEditMode && (
-                <Box
-                    sx={{
-                        position: 'fixed',
-                        bottom: 24,
-                        right: 24,
-                        backgroundColor: 'primary.main',
-                        color: 'primary.contrastText',
-                        px: 3,
-                        py: 1.5,
-                        borderRadius: 24,
-                        fontWeight: 600,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                        boxShadow: 4,
-                        zIndex: 1000,
-                    }}
-                >
-                    <EditIcon fontSize="small" />
+                <Box sx={{
+                    position: 'fixed',
+                    bottom: 24,
+                    right: 24,
+                    background: 'linear-gradient(135deg, #00D48A 0%, #00B872 100%)',
+                    color: '#000000',
+                    px: 3,
+                    py: 1.5,
+                    borderRadius: 24,
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    boxShadow: '0 8px 30px rgba(0, 212, 138, 0.4)',
+                    zIndex: 1000,
+                    animation: 'fadeIn 0.3s ease-out',
+                }}>
+                    <EditIcon fontSize="small"/>
                     Edit Mode Active - Drag to Rearrange
                 </Box>
             )}
@@ -181,12 +184,12 @@ export const MainLayout: React.FC = () => {
                 open={snackbarOpen}
                 autoHideDuration={3000}
                 onClose={() => setSnackbarOpen(false)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
             >
                 <Alert
                     onClose={() => setSnackbarOpen(false)}
                     severity="success"
-                    sx={{ width: '100%' }}
+                    sx={{width: '100%'}}
                 >
                     {snackbarMessage}
                 </Alert>
